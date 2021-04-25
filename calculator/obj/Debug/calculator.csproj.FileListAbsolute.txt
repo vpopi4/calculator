@@ -18,3 +18,13 @@ C:\Users\Student\Desktop\calculator-main\calculator\obj\Debug\calculator.csproj.
 C:\Users\Student\Desktop\calculator-main\calculator\obj\Debug\calculator.csproj.CoreCompileInputs.cache
 C:\Users\Student\Desktop\calculator-main\calculator\obj\Debug\calculator.exe
 C:\Users\Student\Desktop\calculator-main\calculator\obj\Debug\calculator.pdb
+C:\Users\abida\Desktop\calculator-main\calculator\bin\Debug\calculator.exe.config
+C:\Users\abida\Desktop\calculator-main\calculator\bin\Debug\calculator.exe
+C:\Users\abida\Desktop\calculator-main\calculator\bin\Debug\calculator.pdb
+C:\Users\abida\Desktop\calculator-main\calculator\obj\Debug\calculator.csprojAssemblyReference.cache
+C:\Users\abida\Desktop\calculator-main\calculator\obj\Debug\calculator.Form1.resources
+C:\Users\abida\Desktop\calculator-main\calculator\obj\Debug\calculator.Properties.Resources.resources
+C:\Users\abida\Desktop\calculator-main\calculator\obj\Debug\calculator.csproj.GenerateResource.cache
+C:\Users\abida\Desktop\calculator-main\calculator\obj\Debug\calculator.csproj.CoreCompileInputs.cache
+C:\Users\abida\Desktop\calculator-main\calculator\obj\Debug\calculator.exe
+C:\Users\abida\Desktop\calculator-main\calculator\obj\Debug\calculator.pdb

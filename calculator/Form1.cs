@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 //using System.ComponentModel;
 //using System.Data;
 //using System.Drawing;
@@ -30,9 +29,8 @@ namespace calculator
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            for(int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
                 Controls["button" + i].Click += new EventHandler(digitalButton_Click);
-            }
             plus.Click += new EventHandler(signButton_Click);
             minus.Click += new EventHandler(signButton_Click);
             multiply.Click += new EventHandler(signButton_Click);
@@ -40,73 +38,54 @@ namespace calculator
             dec.Checked = true;
         }
 
-        private void signButton_Click(object sender, EventArgs e)
-        {
-            if (isSecondNumber) {
-                calculation();
-            }
-
-            if (sender.Equals(plus)) {
-                sign = '+';
-            }
-
-            if (sender.Equals(minus)) {
-                sign = '-';
-            }
-
-            if (sender.Equals(multiply)) {
-                sign = '*';
-            }
-
-            if (sender.Equals(divide)) {
-                sign = '/';
-            }
-            Console.WriteLine(calc0);
-
-            if(isEndCalculation) {
-                calc0 = result;
-            }
-
-            isEndCalculation = false;
-            signPressed = true;
-            isSecondNumber = true;
-            isDecimal = false;
-            calc1 = 0;
-            result = 0;
-            countAfterDecimal = 0;
-
-            display();
-        }
-
         private void digitalButton_Click(object sender, EventArgs e)
         {
             result = 0;
             int current = 0;
 
-            for (int i = 0; i < 10; i++) {
-                if (sender.Equals(Controls["button" + i])) {
-                    current = i;
-                }
+            for (int i = 0; i < 10; i++)
+            {
+                current = sender.Equals(Controls["button" + i]) ? i : current;
             }
 
-            if (isSecondNumber) {
-                if (isDecimal) {
-                    countAfterDecimal++;
-                    calc1 = (double)(calc1 + current / Math.Pow(10, countAfterDecimal));
-                } else {
-                    calc1 = calc1 * 10 + current;
-                }
-            } else {
-                if (isDecimal) {
-                    countAfterDecimal++;
-                    calc0 = (double)(calc0 + current / Math.Pow(10, countAfterDecimal));
-                } else {
-                    calc0 = calc0 * 10 + current;
-                }
-            }
+            addDigit(current);
 
             isEndCalculation = false;
+        }
+        private void signButton_Click(object sender, EventArgs e)
+        {
+            if (isSecondNumber) calculation();
+
+            sign = sender.Equals(plus) ? '+' :
+                   sender.Equals(minus) ? '-' :
+                   sender.Equals(multiply) ? '*' : '/';
+
+            calc0 = isEndCalculation ? result : calc0;
+            calc1 = 0;
+            result = 0;
+            countAfterDecimal = 0;
+            isDecimal = false;
+            isSecondNumber = true;
+            isEndCalculation = false;
+            signPressed = true;
+
             display();
+        }
+
+        private void clear_Click(object sender, EventArgs e)
+        {
+            clearTextBox();
+            textBox1.Text = "0 ";
+        }
+
+        private void equal_Click(object sender, EventArgs e)
+        {
+            calculation();
+        }
+
+        private void delete_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void floatPoint_Click(object sender, EventArgs e)
@@ -115,35 +94,76 @@ namespace calculator
             display();
         }
 
+        private void addDigit(int digit)
+        {
+            if (isSecondNumber && isDecimal)
+            {
+                countAfterDecimal++;
+                calc1 = (double)(calc1 + digit / Math.Pow(10, countAfterDecimal));
+            }
+            else if (isSecondNumber && !isDecimal)
+            {
+                calc1 = calc1 * 10 + digit;
+            }
+            else if (!isSecondNumber && isDecimal)
+            {
+                countAfterDecimal++;
+                calc0 = (double)(calc0 + digit / Math.Pow(10, countAfterDecimal));
+            }
+            else
+            {
+                calc0 = calc0 * 10 + digit;
+            }
+
+            display();
+        }
         private void display()
         {
-            if (isSecondNumber) {
-                if (isDecimal && calc1 % 1 == 0) {
+            if (isSecondNumber)
+            {
+                if (isDecimal && calc1 % 1 == 0)
+                {
                     textBox1.Text = calc0.ToString() + " " + sign + " " + calc1.ToString() + ", ";
-                } else if (signPressed) {
+                }
+                else if (signPressed)
+                {
                     textBox1.Text = calc0.ToString() + " " + sign + " ";
-                } else if (isDecimal && countAfterDecimal != 0) {
+                }
+                else if (isDecimal && countAfterDecimal != 0)
+                {
                     textBox1.Text = calc1.ToString();
-                    for (int i = 0; i < countAfterDecimal; i++) {
+                    for (int i = 0; i < countAfterDecimal; i++)
+                    {
                         textBox1.Text = textBox1.Text + "0";
                     }
                     textBox1.Text = textBox1.Text + " ";
-                } else {
+                }
+                else
+                {
                     textBox1.Text = calc0.ToString() + " " + sign + " " + calc1.ToString() + " ";
                 }
-            } else if (!isSecondNumber) {
-                if (isDecimal && calc0 % 1 == 0) {
-                    if (countAfterDecimal != 0) {
+            }
+            else if (!isSecondNumber)
+            {
+                if (isDecimal && calc0 % 1 == 0)
+                {
+                    if (countAfterDecimal != 0)
+                    {
                         textBox1.Text = calc0.ToString() + ",";
-                        for (int i = 0; i < countAfterDecimal; i++) {
+                        for (int i = 0; i < countAfterDecimal; i++)
+                        {
                             textBox1.Text += "0";
                         }
                         textBox1.Text += " ";
-                    } else {
+                    }
+                    else
+                    {
                         textBox1.Text = calc0.ToString() + ", ";
 
                     }
-                } else {
+                }
+                else
+                {
                     textBox1.Text = calc0.ToString() + " ";
                 }
             }
@@ -156,11 +176,7 @@ namespace calculator
             signPressed = false;
         }
 
-        private void clear_Click(object sender, EventArgs e)
-        {
-            clearTextBox();
-            textBox1.Text = "0 ";
-        }
+
 
         private void clearTextBox()
         {
@@ -177,7 +193,8 @@ namespace calculator
             isDecimal = false;
             countAfterDecimal = 0;
 
-            switch (sign) {
+            switch (sign)
+            {
                 case '+':
                     result = calc0 + calc1;
                     clearTextBox();
@@ -198,15 +215,6 @@ namespace calculator
 
             isEndCalculation = true;
             display();
-        }
-        private void equal_Click(object sender, EventArgs e)
-        {
-            calculation();
-        }
-
-        private void delete_Click(object sender, EventArgs e)
-        {
-
         }
 
     }
